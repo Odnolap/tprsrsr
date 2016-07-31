@@ -7,6 +7,7 @@ import ru.odnolap.tprstst.model.Payment;
 
 import java.util.List;
 
+@Transactional(readOnly = true)
 public interface ProxyPaymentRepository extends JpaRepository<Payment, Integer> {
     @Override
     @Transactional

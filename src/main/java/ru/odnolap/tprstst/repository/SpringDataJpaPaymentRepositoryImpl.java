@@ -9,7 +9,7 @@ import ru.odnolap.tprstst.model.Payment;
 
 import java.util.Collection;
 
-//@Repository
+@Repository
 public class SpringDataJpaPaymentRepositoryImpl implements PaymentRepository {
     private final static Sort SORT_REGISTRATION_TIME_DESC = new Sort(Sort.Direction.DESC, "registrationTime");
 

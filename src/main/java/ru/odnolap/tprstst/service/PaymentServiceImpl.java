@@ -13,6 +13,7 @@ import java.util.Collection;
 public class PaymentServiceImpl implements PaymentService {
 
     @Autowired
+    @Qualifier("springDataJpaPaymentRepositoryImpl")
     private PaymentRepository repository;
 
     @Override
