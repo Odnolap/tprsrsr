@@ -1,12 +1,13 @@
 DELETE FROM payments;
 DELETE FROM contragents;
 DELETE FROM products;
-ALTER SEQUENCE global_seq RESTART WITH 100000;
+ALTER SEQUENCE payment_id_seq RESTART WITH 1;
+ALTER SEQUENCE contragent_id_seq RESTART WITH 2;
 
-INSERT INTO contragents (id, name) VALUES
-  (2, 'Контрагент номер 2'),
-  (4, 'Контрагент номер 4'),
-  (6, 'Контрагент номер 6');
+INSERT INTO contragents (name) VALUES
+  ('Контрагент номер 2'),
+  ('Контрагент номер 4'),
+  ('Контрагент номер 6');
 
 INSERT INTO products (article, name) VALUES
   ('100-1', 'Товар номер 1'),
@@ -22,6 +23,7 @@ INSERT INTO products (article, name) VALUES
 INSERT INTO payments
  (product_article, contragent_id, contragent_time, summ, registration_time) VALUES
   ('100-8', 4, TIMESTAMP '2016-07-30 22:31:46', 584, TIMESTAMP '2016-07-30 22:34:01'),
+  ('100-1', 2, TIMESTAMP '2016-07-30 21:08:15', 322.48, TIMESTAMP '2016-07-30 21:10:33'),
   ('100-3', 2, TIMESTAMP '2016-07-30 23:11:52', 122, TIMESTAMP '2016-07-30 23:14:29');
 
 

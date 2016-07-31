@@ -2,6 +2,7 @@ package ru.odnolap.tprstst.service;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.odnolap.tprstst.model.Payment;
 import ru.odnolap.tprstst.repository.PaymentRepository;
@@ -39,9 +40,9 @@ public class PaymentServiceImpl implements PaymentService {
                                            Double sumFrom, Double sumTo, Integer status,
                                            LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
                                            LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
-                                           LocalDateTime autorisationDateFrom, LocalDateTime autorisationDateTo) {
+                                           LocalDateTime authorizationDateFrom, LocalDateTime authorizationDateTo) {
         return repository.getFiltered(productArticle, contragentId, sumFrom, sumTo, status,
                 contragentDateFrom, contragentDateTo, registratioinDateFrom, RegistrationDateTo,
-                autorisationDateFrom, autorisationDateTo);
+                authorizationDateFrom, authorizationDateTo);
     }
 }

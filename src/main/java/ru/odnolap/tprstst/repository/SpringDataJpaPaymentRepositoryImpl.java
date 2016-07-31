@@ -1,41 +1,30 @@
 package ru.odnolap.tprstst.repository;
 
 import org.joda.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 import ru.odnolap.tprstst.model.Payment;
-import ru.odnolap.tprstst.util.PaymentUtil;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
-@Repository
-public class InMemoryPaymentRepositoryImpl implements PaymentRepository {
-    private Map<Integer, Payment> repository = new ConcurrentHashMap<>();
-    private AtomicInteger counter = new AtomicInteger(0);
+//@Repository
+public class SpringDataJpaPaymentRepositoryImpl implements PaymentRepository {
+    private final static Sort SORT_REGISTRATION_TIME_DESC = new Sort(Sort.Direction.DESC, "registrationTime");
 
-    {
-        for (Payment p: PaymentUtil.getPaymentList()) {
-            save(p);
-        }
-    }
+    @Autowired
+    private ProxyPaymentRepository proxy;
 
     @Override
     public Collection<Payment> getAll() {
-        return repository.values();
+        return proxy.findAll(SORT_REGISTRATION_TIME_DESC);
     }
 
     @Override
     public Payment save(Payment payment) {
         Assert.notNull(payment, "Payment must not be null");
-        if (payment.isNew()) {
-            payment.setId(counter.incrementAndGet());
-        }
-
-        repository.put(payment.getId(), payment);
-        return payment;
+        return proxy.save(payment);
     }
 
     @Override
@@ -44,8 +33,7 @@ public class InMemoryPaymentRepositoryImpl implements PaymentRepository {
                                            LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
                                            LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
                                            LocalDateTime authorizationDateFrom, LocalDateTime authorizationDateTo) {
-        // Пока что пусть возвращает все, не обращая внимание на значения фильтров
-        return getAll();
+        return getAll(); // TODO !!!
     }
 
     @Override
@@ -56,12 +44,12 @@ public class InMemoryPaymentRepositoryImpl implements PaymentRepository {
         Assert.notNull(payment, "Payment must not be null");
         payment.setStatus(1);
         payment.setAuthorizationTime(new LocalDateTime());
-        repository.put(payment.getId(), payment);
+        proxy.save(payment);
+
     }
 
     @Override
     public Payment get(Integer id) {
-        Assert.notNull(id, "Payment id must not be null");
-        return repository.get(id);
+        return proxy.findOne(id);
     }
 }

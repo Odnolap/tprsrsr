@@ -33,7 +33,7 @@
             <td>${payment.status}</td>
             <td>${payment.contragentTime.toString("dd.MM.yyyy hh:mm:ss")}</td>
             <td>${payment.registrationTime.toString("dd.MM.yyyy hh:mm:ss")}</td>
-            <td>${payment.autorisationTime.toString("dd.MM.yyyy hh:mm:ss")}</td>
+            <td>${payment.authorizationTime.toString("dd.MM.yyyy hh:mm:ss")}</td>
             <td><a href="payments?action=confirm&id=${payment.id}">Confirm</a></td>
         </tr>
     </c:forEach>

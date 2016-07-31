@@ -34,9 +34,9 @@ public class PaymentRestController {
                                            Double sumFrom, Double sumTo, Integer status,
                                            LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
                                            LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
-                                           LocalDateTime autorisationDateFrom, LocalDateTime autorisationDateTo) {
+                                           LocalDateTime authorizationDateFrom, LocalDateTime authorizationDateTo) {
         return service.getFiltered(productArticle, contragentId, sumFrom, sumTo, status,
                 contragentDateFrom, contragentDateTo, registratioinDateFrom, RegistrationDateTo,
-                autorisationDateFrom, autorisationDateTo);
+                authorizationDateFrom, authorizationDateTo);
     }
 }

@@ -6,8 +6,6 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="ru.odnolap.**.repository"/>
-
     <context:component-scan base-package="ru.odnolap.**.service"/>
 
     <context:component-scan base-package="ru.odnolap.**.web"/>

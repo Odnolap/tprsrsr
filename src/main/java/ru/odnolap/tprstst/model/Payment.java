@@ -1,16 +1,47 @@
 package ru.odnolap.tprstst.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDateTime;
 
+import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 
+@Entity
+@Table(name = "payments")
 public class Payment {
+    @Id
+    @SequenceGenerator(name = "payment_id_seq", sequenceName = "payment_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payment_id_seq")
     private Integer id; // id платежа
+
+    @NotEmpty
+    @Column(name = "product_article", nullable = false)
     private String productArticle; // артикул товара
+
+    @NotNull
+    @Column(name = "contragent_id", nullable = false)
     private Integer contragentId; // id контрагента
+
+    @NotNull
+    @Column(name = "contragent_time")
     private LocalDateTime contragentTime; // дата платежа контрагента
+
+    @NotNull
+    @Column(name = "summ")
+    @Digits(fraction = 2, integer = 10)
     private double sum; // сумма платежа
+
+    @NotNull
+    @Column(name = "registration_time")
     private LocalDateTime registrationTime; // дата регистрация платежа в системе
-    private LocalDateTime autorisationTime; // дата подтверждения платежа в системе
+
+    @NotNull
+    @Column(name = "authorization_time")
+    private LocalDateTime authorizationTime; // дата подтверждения платежа в системе
+
+    @NotNull
+    @Column(name = "status")
     private Integer status = 0; // статус платежа: 0 - зарегистрирован, 1 - подтвержден
 
     public Payment() {}
@@ -64,12 +95,12 @@ public class Payment {
         this.registrationTime = registrationTime;
     }
 
-    public LocalDateTime getAutorisationTime() {
-        return autorisationTime;
+    public LocalDateTime getAuthorizationTime() {
+        return authorizationTime;
     }
 
-    public void setAutorisationTime(LocalDateTime autorisationTime) {
-        this.autorisationTime = autorisationTime;
+    public void setAuthorizationTime(LocalDateTime authorizationTime) {
+        this.authorizationTime = authorizationTime;
     }
 
     public Integer getStatus() {
