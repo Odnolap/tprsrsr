@@ -1,6 +1,6 @@
 package ru.odnolap.tprstst.web;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.odnolap.tprstst.model.Payment;
@@ -32,9 +32,9 @@ public class PaymentRestController {
 
     public Collection<Payment> getFiltered(String productArticle, Integer contragentId,
                                            Double sumFrom, Double sumTo, Integer status,
-                                           DateTime contragentDateFrom, DateTime contragentDateTo,
-                                           DateTime registratioinDateFrom, DateTime RegistrationDateTo,
-                                           DateTime autorisationDateFrom, DateTime autorisationDateTo) {
+                                           LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
+                                           LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
+                                           LocalDateTime autorisationDateFrom, LocalDateTime autorisationDateTo) {
         return service.getFiltered(productArticle, contragentId, sumFrom, sumTo, status,
                 contragentDateFrom, contragentDateTo, registratioinDateFrom, RegistrationDateTo,
                 autorisationDateFrom, autorisationDateTo);

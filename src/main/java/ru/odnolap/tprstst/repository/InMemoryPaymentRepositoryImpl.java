@@ -1,6 +1,6 @@
 package ru.odnolap.tprstst.repository;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Repository;
 import ru.odnolap.tprstst.model.Payment;
 import ru.odnolap.tprstst.util.PaymentUtil;
@@ -41,9 +41,9 @@ public class InMemoryPaymentRepositoryImpl implements PaymentRepository {
     @Override
     public Collection<Payment> getFiltered(String productArticle, Integer contragentId,
                                            Double sumFrom, Double sumTo, Integer status,
-                                           DateTime contragentDateFrom, DateTime contragentDateTo,
-                                           DateTime registratioinDateFrom, DateTime RegistrationDateTo,
-                                           DateTime autorisationDateFrom, DateTime autorisationDateTo) {
+                                           LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
+                                           LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
+                                           LocalDateTime autorisationDateFrom, LocalDateTime autorisationDateTo) {
         // Пока что пусть возвращает все, не обращая внимание на значения фильтров
         return getAll();
     }
@@ -55,7 +55,7 @@ public class InMemoryPaymentRepositoryImpl implements PaymentRepository {
         }
         Objects.requireNonNull(payment);
         payment.setStatus(1);
-        payment.setAutorisationTime(new DateTime());
+        payment.setAutorisationTime(new LocalDateTime());
         repository.put(payment.getId(), payment);
     }
 

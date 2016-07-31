@@ -21,7 +21,7 @@
         </dl>
         <dl>
             <dt>Время контрагента</dt>
-            <dd><input type="datetime-local" value="${payment.contragentTime.toLocalDateTime()}" pattern="dd.MM.yyyy hh:mm:ss" name="contragentTime"></dd>
+            <dd><input type="datetime-local" value="${payment.contragentTime}" pattern="dd.MM.yyyy hh:mm:ss" name="contragentTime"></dd>
         </dl>
         <dl>
             <dt>Сумма</dt>
