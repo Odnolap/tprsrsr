@@ -4,11 +4,7 @@
 <html>
 <head>
     <title>Payments</title>
-    <style>
-        .string {
-            color: midnightblue;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <section>
@@ -35,9 +31,9 @@
             <td>${payment.contragentId}</td>
             <td>${payment.sum}</td>
             <td>${payment.status}</td>
-            <td>${payment.contragentTime.toString()}</td>
-            <td>${payment.registrationTime.toString()}</td>
-            <td>${payment.autorisationTime.toString()}</td>
+            <td>${payment.contragentTime.toString("dd.MM.yyyy hh:mm:ss")}</td>
+            <td>${payment.registrationTime.toString("dd.MM.yyyy hh:mm:ss")}</td>
+            <td>${payment.autorisationTime.toString("dd.MM.yyyy hh:mm:ss")}</td>
             <td><a href="payments?action=confirm&id=${payment.id}">Confirm</a></td>
         </tr>
     </c:forEach>

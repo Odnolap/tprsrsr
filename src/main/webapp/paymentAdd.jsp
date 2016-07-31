@@ -2,28 +2,11 @@
 <html>
 <head>
     <title>Add payment</title>
-    <style>
-        dl {
-            background: none repeat scroll 0 0 #FAFAFA;
-            margin: 8px 0;
-            padding: 0;
-        }
-
-        dt {
-            display: inline-block;
-            width: 170px;
-        }
-
-        dd {
-            display: inline-block;
-            margin-left: 8px;
-            vertical-align: top;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <section>
-    <h2><a href="">Home</a> </h2>
+    <h2><a href="/tprstst">Home</a> </h2>
     <h3>Add payment</h3>
     <hr>
     <jsp:useBean id="payment" type="ru.odnolap.tprstst.model.Payment" scope="request"/>
@@ -35,6 +18,10 @@
         <dl>
             <dt>Контрагент (id)</dt>
             <dd><input type="number" min="1" value="${payment.contragentId}" name="contragentId"></dd>
+        </dl>
+        <dl>
+            <dt>Время контрагента</dt>
+            <dd><input type="datetime-local" value="${payment.contragentTime.toLocalDateTime()}" pattern="dd.MM.yyyy hh:mm:ss" name="contragentTime"></dd>
         </dl>
         <dl>
             <dt>Сумма</dt>

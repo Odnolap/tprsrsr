@@ -1,24 +1,25 @@
 package ru.odnolap.tprstst.model;
 
-import java.util.Date;
+import org.joda.time.DateTime;
+
 
 public class Payment {
     private Integer id; // id платежа
     private final String productArticle; // артикул товара
     private final Integer contragentId; // id контрагента
-    private final Date contragentTime; // дата платежа контрагента
+    private final DateTime contragentTime; // дата платежа контрагента
     private double sum; // сумма платежа
-    private Date registrationTime; // дата регистрация платежа в системе
-    private Date autorisationTime; // дата подтверждения платежа в системе
+    private DateTime registrationTime; // дата регистрация платежа в системе
+    private DateTime autorisationTime; // дата подтверждения платежа в системе
     private Integer status = 0; // статус платежа: 0 - зарегистрирован, 1 - подтвержден
 
-    public Payment(String productArticle, Integer contragentId, Date contragentTime) {
+    public Payment(String productArticle, Integer contragentId, DateTime contragentTime) {
         this.productArticle = productArticle;
         this.contragentId = contragentId;
         this.contragentTime = contragentTime;
     }
 
-    public Payment(String productArticle, Integer contragentId, Date contragentTime, Double sum) {
+    public Payment(String productArticle, Integer contragentId, DateTime contragentTime, Double sum) {
         this.productArticle = productArticle;
         this.contragentId = contragentId;
         this.contragentTime = contragentTime;
@@ -41,7 +42,7 @@ public class Payment {
         return contragentId;
     }
 
-    public Date getContragentTime() {
+    public DateTime getContragentTime() {
         return contragentTime;
     }
 
@@ -53,19 +54,19 @@ public class Payment {
         this.sum = sum;
     }
 
-    public Date getRegistrationTime() {
+    public DateTime getRegistrationTime() {
         return registrationTime;
     }
 
-    public void setRegistrationTime(Date registrationTime) {
+    public void setRegistrationTime(DateTime registrationTime) {
         this.registrationTime = registrationTime;
     }
 
-    public Date getAutorisationTime() {
+    public DateTime getAutorisationTime() {
         return autorisationTime;
     }
 
-    public void setAutorisationTime(Date autorisationTime) {
+    public void setAutorisationTime(DateTime autorisationTime) {
         this.autorisationTime = autorisationTime;
     }
 

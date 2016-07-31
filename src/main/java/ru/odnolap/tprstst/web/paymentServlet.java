@@ -1,9 +1,9 @@
 package ru.odnolap.tprstst.web;
 
+import org.joda.time.DateTime;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.odnolap.tprstst.model.Payment;
-import ru.odnolap.tprstst.repository.InMemoryPaymentRepositoryImpl;
-import ru.odnolap.tprstst.repository.PaymentRepository;
-import ru.odnolap.tprstst.util.PaymentUtil;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,31 +11,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 
-/**
- * Created by Odnolap on 30.07.2016.
- */
-public class paymentServlet extends HttpServlet {
-    private PaymentRepository repository;
+public class PaymentServlet extends HttpServlet {
+
+    private ConfigurableApplicationContext springContext;
+    private PaymentRestController paymentController;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        repository = new InMemoryPaymentRepositoryImpl();
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        paymentController = springContext.getBean(PaymentRestController.class);
+    }
+
+    @Override
+    public void destroy() {
+        springContext.close();
+        super.destroy();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         Payment payment = new Payment(request.getParameter("productArticle"),
                 Integer.parseInt(request.getParameter("contragentId")),
-                new Date(),
+                DateTime.parse(request.getParameter("contragentTime")),
                 Double.parseDouble(request.getParameter("sum")));
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.SECOND, 2);
-        payment.setRegistrationTime(c.getTime());
-        repository.save(payment);
+        payment.setRegistrationTime(new DateTime());
+        paymentController.save(payment);
         response.sendRedirect("payments");
     }
 
@@ -43,17 +45,17 @@ public class paymentServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action == null) {
-            request.setAttribute("paymentList", repository.getAll());
+            request.setAttribute("paymentList", paymentController.getAll());
             request.getRequestDispatcher("/payments.jsp").forward(request, response);
         } else if ("create".equals(action)) {
-            final Payment payment = new Payment("", null, new Date());
+            final Payment payment = new Payment("", null, new DateTime(), 0d);
             request.setAttribute("payment", payment);
             request.getRequestDispatcher("paymentAdd.jsp").forward(request, response);
         } else if ("confirm".equals(action)) {
             Integer id = Integer.parseInt(request.getParameter("id"));
-            Payment payment = repository.get(id);
-            repository.confirmPayment(payment, payment.getSum());
-            response.sendRedirect("meals");
+            Payment payment = paymentController.get(id);
+            paymentController.confirm(payment, payment.getSum());
+            response.sendRedirect("payments");
         }
     }
 }
