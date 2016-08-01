@@ -21,11 +21,11 @@
         </dl>
         <dl>
             <dt>Время контрагента</dt>
-            <dd><input type="datetime-local" value="${payment.contragentTime}" pattern="dd.MM.yyyy hh:mm:ss" name="contragentTime"></dd>
+            <dd><input type="datetime-local" value="${payment.contragentTime}" name="contragentTime"></dd>
         </dl>
         <dl>
             <dt>Сумма</dt>
-            <dd><input type="number" min="1" value="${payment.sum}" name="sum"></dd>
+            <dd><input type="number" min="1" step="0.01" value="${payment.sum}" name="sum"></dd>
         </dl>
         <button type="submit">Save</button>
         <button onclick="window.history.back()">Cancel</button>

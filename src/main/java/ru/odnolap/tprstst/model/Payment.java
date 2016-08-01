@@ -3,6 +3,7 @@ package ru.odnolap.tprstst.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class Payment {
     private String productArticle; // артикул товара
 
     @NotNull
-    @Column(name = "contragent_id", nullable = false)
+    @Column(name = "contragent_id")
     private Integer contragentId; // id контрагента
 
     @NotNull
@@ -36,7 +37,6 @@ public class Payment {
     @Column(name = "registration_time")
     private LocalDateTime registrationTime; // дата регистрация платежа в системе
 
-    @NotNull
     @Column(name = "authorization_time")
     private LocalDateTime authorizationTime; // дата подтверждения платежа в системе
 
