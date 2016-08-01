@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ru.odnolap.tprstst.util.PaymentUtil.MIN_DATE_TIME;
+import static ru.odnolap.tprstst.util.PaymentUtil.MAX_DATE_TIME;
+
 public class PaymentServlet extends HttpServlet {
 
     private ConfigurableApplicationContext springContext;
@@ -32,13 +35,32 @@ public class PaymentServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        Payment payment = new Payment(request.getParameter("productArticle"),
-                Integer.parseInt(request.getParameter("contragentId")),
-                LocalDateTime.parse(request.getParameter("contragentTime")),
-                Double.parseDouble(request.getParameter("sum")));
-        payment.setRegistrationTime(LocalDateTime.now());
-        paymentController.save(payment);
-        response.sendRedirect("payments");
+        String action = request.getParameter("action");
+        if (action == null) {
+            Payment payment = new Payment(request.getParameter("productArticle"),
+                    Integer.parseInt(request.getParameter("contragentId")),
+                    LocalDateTime.parse(request.getParameter("contragentTime")),
+                    Double.parseDouble(request.getParameter("sum")));
+            payment.setRegistrationTime(LocalDateTime.now());
+            paymentController.save(payment);
+            response.sendRedirect("payments");
+        } else if ("filter".equals(action)) {
+            String s;
+            String productArticle = (s = request.getParameter("productArticle")).isEmpty() ? null : s;
+            Integer contragentId = (s = request.getParameter("contragentId")).isEmpty() ? null : Integer.parseInt(s);
+            Double sumFrom = (s = request.getParameter("sumFrom")).isEmpty() ? 1d : Double.parseDouble(s);
+            Double sumTo = (s = request.getParameter("sumTo")).isEmpty() ? 9999999999d : Double.parseDouble(s);
+            Integer status = (s = request.getParameter("status")).isEmpty() ? null : Integer.parseInt(s);
+            LocalDateTime contragentTimeFrom = (s = request.getParameter("contragentTimeFrom")).isEmpty() ? MIN_DATE_TIME : LocalDateTime.parse(s);
+            LocalDateTime contragentTimeTo = (s = request.getParameter("contragentTimeTo")).isEmpty() ? MAX_DATE_TIME : LocalDateTime.parse(s);
+            LocalDateTime registrationTimeFrom = (s = request.getParameter("registrationTimeFrom")).isEmpty() ? MIN_DATE_TIME : LocalDateTime.parse(s);
+            LocalDateTime registrationTimeTo = (s = request.getParameter("registrationTimeTo")).isEmpty() ? MAX_DATE_TIME : LocalDateTime.parse(s);
+            LocalDateTime authorizationTimeFrom = (s = request.getParameter("authorizationTimeFrom")).isEmpty() ? null : LocalDateTime.parse(s);
+            LocalDateTime authorizationTimeTo = (s = request.getParameter("authorizationTimeTo")).isEmpty() ? null : LocalDateTime.parse(s);
+            request.setAttribute("paymentList", paymentController.getFiltered(productArticle, contragentId, sumFrom, sumTo, status,
+                    contragentTimeFrom, contragentTimeTo, registrationTimeFrom, registrationTimeTo, authorizationTimeFrom, authorizationTimeTo));
+            request.getRequestDispatcher("/payments.jsp").forward(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

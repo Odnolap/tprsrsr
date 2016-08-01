@@ -9,6 +9,9 @@ import ru.odnolap.tprstst.model.Payment;
 
 import java.util.Collection;
 
+import static ru.odnolap.tprstst.util.PaymentUtil.MIN_DATE_TIME;
+import static ru.odnolap.tprstst.util.PaymentUtil.MAX_DATE_TIME;
+
 @Repository
 public class SpringDataJpaPaymentRepositoryImpl implements PaymentRepository {
     private final static Sort SORT_REGISTRATION_TIME_DESC = new Sort(Sort.Direction.DESC, "registrationTime");
@@ -33,7 +36,32 @@ public class SpringDataJpaPaymentRepositoryImpl implements PaymentRepository {
                                            LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
                                            LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
                                            LocalDateTime authorizationDateFrom, LocalDateTime authorizationDateTo) {
-        return getAll(); // TODO !!!
+        String productArticlePattern = productArticle == null ? "%" : productArticle;
+        Integer contragentIdFrom = contragentId == null ? 0 : contragentId;
+        Integer contragentIdTo = contragentId == null ? 2000000000 : contragentId;
+        Integer statusFrom = status == null ? 0 : status;
+        Integer statusTo = status == null ? 1 : status;
+
+        if (authorizationDateFrom == null && authorizationDateTo == null) { // Возвращаем платежи с любой датой подтверждения, в т.ч. с пустой
+            return proxy.findByProductArticleLikeAndContragentIdBetweenAndSumBetweenAndStatusBetweenAndContragentTimeBetweenAndRegistrationTimeBetweenOrderByRegistrationTimeDesc
+                    (productArticlePattern, contragentIdFrom, contragentIdTo, sumFrom, sumTo,
+                            statusFrom, statusTo,
+                            contragentDateFrom, contragentDateTo,
+                            registratioinDateFrom, RegistrationDateTo);
+        } else {
+            if (authorizationDateFrom == null) {
+                authorizationDateFrom = MIN_DATE_TIME;
+            }
+            if (authorizationDateTo == null) {
+                authorizationDateTo = MAX_DATE_TIME;
+            }
+            return proxy.findByProductArticleLikeAndContragentIdBetweenAndSumBetweenAndStatusBetweenAndContragentTimeBetweenAndRegistrationTimeBetweenAndAuthorizationTimeBetweenOrderByRegistrationTimeDesc
+                    (productArticlePattern, contragentIdFrom, contragentIdTo, sumFrom, sumTo,
+                            statusFrom, statusTo,
+                            contragentDateFrom, contragentDateTo,
+                            registratioinDateFrom, RegistrationDateTo,
+                            authorizationDateFrom, authorizationDateTo);
+        }
     }
 
     @Override

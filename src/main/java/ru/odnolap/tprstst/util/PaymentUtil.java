@@ -12,6 +12,9 @@ import java.util.List;
  */
 public class PaymentUtil {
 
+    public static final LocalDateTime MIN_DATE_TIME = LocalDateTime.of(0, 1, 1, 0, 0, 0);
+    public static final LocalDateTime MAX_DATE_TIME = LocalDateTime.of(3000, 1, 1, 0, 0);
+
     public static final List<Payment> PAYMENT_LIST;
 
     static {

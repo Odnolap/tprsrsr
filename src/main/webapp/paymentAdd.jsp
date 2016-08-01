@@ -16,8 +16,8 @@
             <dd><input type="text" value="${payment.productArticle}" size="20" name="productArticle"></dd>
         </dl>
         <dl>
-            <dt>Контрагент (id)</dt>
-            <dd><input type="number" min="1" value="${payment.contragentId}" name="contragentId"></dd>
+            <dt>Контрагент (id, четное положительное значение)</dt>
+            <dd><input type="number" min="2" step="2" value="${payment.contragentId}" name="contragentId"></dd>
         </dl>
         <dl>
             <dt>Время контрагента</dt>
