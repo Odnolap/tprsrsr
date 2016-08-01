@@ -31,9 +31,9 @@
             <td>${payment.contragentId}</td>
             <td>${payment.sum}</td>
             <td>${payment.status}</td>
-            <td>${payment.contragentTime.toString("dd.MM.yyyy hh:mm:ss")}</td>
-            <td>${payment.registrationTime.toString("dd.MM.yyyy hh:mm:ss")}</td>
-            <td>${payment.authorizationTime.toString("dd.MM.yyyy hh:mm:ss")}</td>
+            <td>${payment.contragentTime.toLocalDate()} ${payment.contragentTime.toLocalTime()}</td>
+            <td>${payment.registrationTime.toLocalDate()} ${payment.registrationTime.toLocalTime()}</td>
+            <td>${payment.authorizationTime.toLocalDate()} ${payment.authorizationTime.toLocalTime()}</td>
             <td><a href="payments?action=confirm&id=${payment.id}">Confirm</a></td>
         </tr>
     </c:forEach>

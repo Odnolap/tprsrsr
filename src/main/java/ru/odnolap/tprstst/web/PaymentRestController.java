@@ -1,6 +1,6 @@
 package ru.odnolap.tprstst.web;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.odnolap.tprstst.model.Payment;

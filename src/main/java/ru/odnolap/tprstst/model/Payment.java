@@ -1,11 +1,11 @@
 package ru.odnolap.tprstst.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "payments")

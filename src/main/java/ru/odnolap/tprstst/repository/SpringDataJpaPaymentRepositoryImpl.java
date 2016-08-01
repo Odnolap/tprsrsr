@@ -1,6 +1,6 @@
 package ru.odnolap.tprstst.repository;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -43,7 +43,7 @@ public class SpringDataJpaPaymentRepositoryImpl implements PaymentRepository {
         }
         Assert.notNull(payment, "Payment must not be null");
         payment.setStatus(1);
-        payment.setAuthorizationTime(new LocalDateTime());
+        payment.setAuthorizationTime(LocalDateTime.now());
         proxy.save(payment);
 
     }

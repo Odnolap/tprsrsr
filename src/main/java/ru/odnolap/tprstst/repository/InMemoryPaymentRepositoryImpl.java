@@ -1,6 +1,6 @@
 package ru.odnolap.tprstst.repository;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 import ru.odnolap.tprstst.model.Payment;
@@ -55,7 +55,7 @@ public class InMemoryPaymentRepositoryImpl implements PaymentRepository {
         }
         Assert.notNull(payment, "Payment must not be null");
         payment.setStatus(1);
-        payment.setAuthorizationTime(new LocalDateTime());
+        payment.setAuthorizationTime(LocalDateTime.now());
         repository.put(payment.getId(), payment);
     }
 

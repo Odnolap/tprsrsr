@@ -1,6 +1,6 @@
 package ru.odnolap.tprstst.service;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 import ru.odnolap.tprstst.model.Payment;
 
 import java.util.Collection;

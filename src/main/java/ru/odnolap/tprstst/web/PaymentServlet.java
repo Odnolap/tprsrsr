@@ -1,6 +1,6 @@
 package ru.odnolap.tprstst.web;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.odnolap.tprstst.model.Payment;
@@ -36,7 +36,7 @@ public class PaymentServlet extends HttpServlet {
                 Integer.parseInt(request.getParameter("contragentId")),
                 LocalDateTime.parse(request.getParameter("contragentTime")),
                 Double.parseDouble(request.getParameter("sum")));
-        payment.setRegistrationTime(new LocalDateTime());
+        payment.setRegistrationTime(LocalDateTime.now());
         paymentController.save(payment);
         response.sendRedirect("payments");
     }
@@ -48,7 +48,7 @@ public class PaymentServlet extends HttpServlet {
             request.setAttribute("paymentList", paymentController.getAll());
             request.getRequestDispatcher("/payments.jsp").forward(request, response);
         } else if ("create".equals(action)) {
-            final Payment payment = new Payment("", null, new LocalDateTime(), 0d);
+            final Payment payment = new Payment("", null, LocalDateTime.now(), 0d);
             request.setAttribute("payment", payment);
             request.getRequestDispatcher("paymentAdd.jsp").forward(request, response);
         } else if ("confirm".equals(action)) {
