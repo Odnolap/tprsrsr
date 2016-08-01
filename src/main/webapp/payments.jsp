@@ -24,7 +24,7 @@
 
         .registred {
             background-color: coral;
-            color: black;
+            color: darkblue;
         }
         .authorized {
             color: black;
