@@ -3,7 +3,6 @@ package ru.odnolap.tprstst.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
