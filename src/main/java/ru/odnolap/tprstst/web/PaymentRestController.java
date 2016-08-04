@@ -1,42 +1,47 @@
 package ru.odnolap.tprstst.web;
 
-import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import ru.odnolap.tprstst.message.PayMessageRequest;
+import ru.odnolap.tprstst.message.PayMessageResponse;
+import ru.odnolap.tprstst.message.PrepareMessageRequest;
+import ru.odnolap.tprstst.message.PrepareMessageResponse;
 import ru.odnolap.tprstst.model.Payment;
 import ru.odnolap.tprstst.service.PaymentService;
 
-import java.util.Collection;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
-@Controller
+@RestController
+@RequestMapping(value = "/rest/payments")
 public class PaymentRestController {
 
     @Autowired
     private PaymentService service;
 
-    public Payment get(Integer id) {
-        return service.get(id);
+    @RequestMapping(value = "/prepare", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public PrepareMessageResponse prepare(@RequestBody PrepareMessageRequest prepareMessageRequest) {
+        return new PrepareMessageResponse(service.save(prepareMessageRequest.toPayment()));
     }
 
-    public Payment save(Payment payment) {
-        return service.save(payment);
+    @RequestMapping(value = "/pay", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public PayMessageResponse pay(@RequestBody PayMessageRequest payMessageRequest) {
+        Payment payment = service.get(payMessageRequest.getPaymentId());
+        return new PayMessageResponse(service.confirm(payment, payMessageRequest.getSum()));
     }
 
-    void confirm(Payment payment, Double sum) {
-        service.confirm(payment, sum);
+    @RequestMapping(value = "/prepareTest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public PrepareMessageResponse prepareTest() {
+        return new PrepareMessageResponse(service.save(new Payment("100-88", 22, LocalDateTime.now().minus(3L, ChronoUnit.SECONDS))));
     }
 
-    public Collection<Payment> getAll() {
-        return service.getAll();
-    }
-
-    public Collection<Payment> getFiltered(String productArticle, Integer contragentId,
-                                           Double sumFrom, Double sumTo, Integer status,
-                                           LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
-                                           LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
-                                           LocalDateTime authorizationDateFrom, LocalDateTime authorizationDateTo) {
-        return service.getFiltered(productArticle, contragentId, sumFrom, sumTo, status,
-                contragentDateFrom, contragentDateTo, registratioinDateFrom, RegistrationDateTo,
-                authorizationDateFrom, authorizationDateTo);
+    @RequestMapping(value = "/payTest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public PayMessageResponse payTest() {
+        Payment payment = service.get(2);
+        return new PayMessageResponse(service.confirm(payment, 322.48d));
     }
 }

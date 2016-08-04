@@ -1,40 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Payments</title>
-    <style>
-        dl {
-            background: none repeat scroll 0 0 #FAFAFA;
-            margin: 8px 0;
-            padding: 0;
-        }
-
-        dt {
-            display: inline-block;
-            width: 170px;
-        }
-
-        dd {
-            display: inline-block;
-            margin-left: 8px;
-            vertical-align: top;
-        }
-
-        .registred {
-            background-color: coral;
-            color: darkblue;
-        }
-        .authorized {
-            color: black;
-        }
-    </style>
+    <%--
+    pageContext.request.requestURL = http://localhost:8080/tprstst/WEB-INF/jsp/paymentList.jsp
+    pageContext.request.requestURI = /tprstst/WEB-INF/jsp/paymentList.jsp
+    pageContext.request.contextPath = /tprstst
+    --%>
+    <c:set var="url">${pageContext.request.requestURL}</c:set>
+    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
 <section>
 <h2>Payments</h2>
-    <form method="post" action="payments?action=filter">
+    <form method="post" action="payments/filter">
         <dl>
             <dt>Артикул товара:</dt>
             <dd><input type="text" name="productArticle" value="${productArticle}"></dd>
@@ -82,7 +66,7 @@
         <button type="submit">Filter</button>
     </form>
     <hr>
-<a href="payments?action=create">Add Payment</a>
+<a href="payments/create">Add Payment</a>
 <hr>
 <table border="1" cellpadding="8" cellspacing="0">
     <thead>
@@ -108,7 +92,7 @@
             <td>${payment.contragentTime.toLocalDate()} ${payment.contragentTime.toLocalTime()}</td>
             <td>${payment.registrationTime.toLocalDate()} ${payment.registrationTime.toLocalTime()}</td>
             <td>${payment.authorizationTime.toLocalDate()} ${payment.authorizationTime.toLocalTime()}</td>
-            <td><a href="payments?action=confirm&id=${payment.id}">Confirm</a></td>
+            <td><a href="payments/confirm?id=${payment.id}">Confirm</a></td>
         </tr>
     </c:forEach>
 </table>

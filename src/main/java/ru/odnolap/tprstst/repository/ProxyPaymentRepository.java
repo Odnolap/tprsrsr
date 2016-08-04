@@ -32,5 +32,4 @@ public interface ProxyPaymentRepository extends JpaRepository<Payment, Integer> 
              Double sumFrom, Double sumTo, Integer statusFrom, Integer statusTo,
              LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
              LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo);
-
 }

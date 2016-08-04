@@ -5,13 +5,10 @@ import ru.odnolap.tprstst.model.Payment;
 
 import java.util.Collection;
 
-/**
- * Created by Odnolap on 30.07.2016.
- */
 public interface PaymentService {
     Payment save(Payment payment);
 
-    void confirm(Payment payment, Double sum);
+    LocalDateTime confirm(Payment payment, Double sum);
 
     Payment get(Integer id);
 

@@ -18,7 +18,6 @@
 
     <tx:annotation-driven/>
 
-
     <!--local postgresql-->
     <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
     <!--without connection pool-->
@@ -31,7 +30,7 @@
     <!--connection pool-->
     <bean id="dataSource"
           class="org.apache.tomcat.jdbc.pool.DataSource"
-          p:driverClassName="org.postgresql.Driver"
+          p:driverClassName="${database.driverClassName}"
           p:url="${database.url}"
           p:username="${database.username}"
           p:password="${database.password}"/>

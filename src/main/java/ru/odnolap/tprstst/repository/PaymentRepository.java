@@ -16,8 +16,6 @@ public interface PaymentRepository {
                                     LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
                                     LocalDateTime authorizationDateFrom, LocalDateTime authorizationDateTo);
 
-    void confirm(Payment payment, Double sum);
-
     Payment get(Integer id);
 
 }

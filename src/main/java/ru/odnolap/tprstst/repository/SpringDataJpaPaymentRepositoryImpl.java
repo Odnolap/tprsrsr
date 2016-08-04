@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
+import org.springframework.transaction.annotation.Transactional;
 import ru.odnolap.tprstst.model.Payment;
 
 import java.util.Collection;
@@ -25,8 +25,8 @@ public class SpringDataJpaPaymentRepositoryImpl implements PaymentRepository {
     }
 
     @Override
+    @Transactional
     public Payment save(Payment payment) {
-        Assert.notNull(payment, "Payment must not be null");
         return proxy.save(payment);
     }
 
@@ -62,18 +62,6 @@ public class SpringDataJpaPaymentRepositoryImpl implements PaymentRepository {
                             registratioinDateFrom, RegistrationDateTo,
                             authorizationDateFrom, authorizationDateTo);
         }
-    }
-
-    @Override
-    public void confirm(Payment payment, Double sum) {
-        if (sum == null || !sum.equals(payment.getSum())) {
-            throw new RuntimeException("Invalid payment sum!");
-        }
-        Assert.notNull(payment, "Payment must not be null");
-        payment.setStatus(1);
-        payment.setAuthorizationTime(LocalDateTime.now());
-        proxy.save(payment);
-
     }
 
     @Override

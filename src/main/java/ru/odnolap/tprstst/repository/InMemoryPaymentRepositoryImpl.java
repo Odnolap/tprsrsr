@@ -2,7 +2,6 @@ package ru.odnolap.tprstst.repository;
 
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
 import ru.odnolap.tprstst.model.Payment;
 import ru.odnolap.tprstst.util.PaymentUtil;
 
@@ -29,7 +28,6 @@ public class InMemoryPaymentRepositoryImpl implements PaymentRepository {
 
     @Override
     public Payment save(Payment payment) {
-        Assert.notNull(payment, "Payment must not be null");
         if (payment.isNew()) {
             payment.setId(counter.incrementAndGet());
         }
@@ -48,20 +46,12 @@ public class InMemoryPaymentRepositoryImpl implements PaymentRepository {
         return getAll();
     }
 
-    @Override
     public void confirm(Payment payment, Double sum) {
-        if (sum == null || !sum.equals(payment.getSum())) {
-            throw new RuntimeException("Invalid payment sum!");
-        }
-        Assert.notNull(payment, "Payment must not be null");
-        payment.setStatus(1);
-        payment.setAuthorizationTime(LocalDateTime.now());
         repository.put(payment.getId(), payment);
     }
 
     @Override
     public Payment get(Integer id) {
-        Assert.notNull(id, "Payment id must not be null");
         return repository.get(id);
     }
 }

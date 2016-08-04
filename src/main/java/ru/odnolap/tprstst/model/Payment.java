@@ -21,17 +21,17 @@ public class Payment {
     private String productArticle; // артикул товара
 
     @NotNull
-    @Column(name = "contragent_id")
+    @Column(name = "contragent_id", nullable = false)
     private Integer contragentId; // id контрагента
 
     @NotNull
-    @Column(name = "contragent_time")
+    @Column(name = "contragent_time", nullable = false)
     private LocalDateTime contragentTime; // дата платежа контрагента
 
     @NotNull
     @Column(name = "summ")
     @Digits(fraction = 2, integer = 10)
-    private double sum; // сумма платежа
+    private Double sum; // сумма платежа
 
     @NotNull
     @Column(name = "registration_time")
@@ -79,11 +79,11 @@ public class Payment {
         return contragentTime;
     }
 
-    public double getSum() {
+    public Double getSum() {
         return sum;
     }
 
-    public void setSum(double sum) {
+    public void setSum(Double sum) {
         this.sum = sum;
     }
 
