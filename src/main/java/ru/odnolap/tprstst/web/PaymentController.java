@@ -12,7 +12,6 @@ import ru.odnolap.tprstst.service.PaymentService;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 
 import static ru.odnolap.tprstst.util.PaymentUtil.MAX_DATE_TIME;
 import static ru.odnolap.tprstst.util.PaymentUtil.MIN_DATE_TIME;
