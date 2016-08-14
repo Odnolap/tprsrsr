@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.odnolap.tprstst.message.PayMessageRequest;
 import ru.odnolap.tprstst.message.PayMessageResponse;
-import ru.odnolap.tprstst.message.PrepareMessageRequest;
 import ru.odnolap.tprstst.message.PrepareMessageResponse;
 import ru.odnolap.tprstst.model.Payment;
 import ru.odnolap.tprstst.service.PaymentService;
@@ -21,19 +19,6 @@ public class PaymentRestController {
     @Autowired
     private PaymentService service;
 
-    // ???
-    @RequestMapping(value = "/prepare", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PrepareMessageResponse prepare(@RequestBody PrepareMessageRequest prepareMessageRequest) {
-        return new PrepareMessageResponse(service.save(prepareMessageRequest.toPayment()));
-    }
-
-    // ???
-    @RequestMapping(value = "/pay", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PayMessageResponse pay(@RequestBody PayMessageRequest payMessageRequest) {
-        Payment payment = service.get(payMessageRequest.getPaymentId());
-        return new PayMessageResponse(service.confirm(payment, payMessageRequest.getSum()));
-    }
-
     /*
     Проверочные вызовы (корректные):
     http://localhost:8080/tprstst/rest/payments/prepare?article=%D0%90%D1%80%D1%82%D0%B8%D0%BA%D1%83%D0%BB%201&contragent_id=34&contragent_time=2016-08-05T01:50:22
@@ -42,7 +27,7 @@ public class PaymentRestController {
     http://localhost:8080/tprstst/rest/payments/prepare?article=309928-00&contragent_id=61&contragent_time=2016-08-05T01:48:11
      */
     @RequestMapping(value = "/prepare", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PrepareMessageResponse prepare2(@RequestParam("article") String article, @RequestParam("contragent_id") Integer contragentId,
+    public PrepareMessageResponse prepare(@RequestParam("article") String article, @RequestParam("contragent_id") Integer contragentId,
                                            @RequestParam("contragent_time") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime contragentTime) {
         return new PrepareMessageResponse(service.save(new Payment(article, contragentId, contragentTime)));
     }
@@ -59,7 +44,7 @@ public class PaymentRestController {
     http://localhost:8080/tprstst/rest/payments/pay?payment_id=8888&sum=584.61
      */
     @RequestMapping(value = "/pay", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PayMessageResponse pay2(@RequestParam("payment_id") Integer id, @RequestParam("sum") Double sum) {
+    public PayMessageResponse pay(@RequestParam("payment_id") Integer id, @RequestParam("sum") Double sum) {
         return new PayMessageResponse(service.confirm(service.get(id), sum));
     }
 

@@ -7,9 +7,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by Odnolap on 30.07.2016.
- */
 public class PaymentUtil {
 
     public static final LocalDateTime MIN_DATE_TIME = LocalDateTime.of(0, 1, 1, 0, 0, 0);
