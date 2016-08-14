@@ -34,7 +34,7 @@ public class SpringDataJpaPaymentRepositoryImpl implements PaymentRepository {
     public Collection<Payment> getFiltered(String productArticle, Integer contragentId,
                                            Double sumFrom, Double sumTo, Integer status,
                                            LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
-                                           LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
+                                           LocalDateTime registratioinDateFrom, LocalDateTime registrationDateTo,
                                            LocalDateTime authorizationDateFrom, LocalDateTime authorizationDateTo) {
         String productArticlePattern = productArticle == null ? "%" : productArticle;
         Integer contragentIdFrom = contragentId == null ? 0 : contragentId;
@@ -47,7 +47,7 @@ public class SpringDataJpaPaymentRepositoryImpl implements PaymentRepository {
                     (productArticlePattern, contragentIdFrom, contragentIdTo, sumFrom, sumTo,
                             statusFrom, statusTo,
                             contragentDateFrom, contragentDateTo,
-                            registratioinDateFrom, RegistrationDateTo);
+                            registratioinDateFrom, registrationDateTo);
         } else {
             if (authorizationDateFrom == null) {
                 authorizationDateFrom = MIN_DATE_TIME;
@@ -59,7 +59,7 @@ public class SpringDataJpaPaymentRepositoryImpl implements PaymentRepository {
                     (productArticlePattern, contragentIdFrom, contragentIdTo, sumFrom, sumTo,
                             statusFrom, statusTo,
                             contragentDateFrom, contragentDateTo,
-                            registratioinDateFrom, RegistrationDateTo,
+                            registratioinDateFrom, registrationDateTo,
                             authorizationDateFrom, authorizationDateTo);
         }
     }

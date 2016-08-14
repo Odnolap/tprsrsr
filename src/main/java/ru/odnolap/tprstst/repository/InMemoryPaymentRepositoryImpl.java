@@ -40,7 +40,7 @@ public class InMemoryPaymentRepositoryImpl implements PaymentRepository {
     public Collection<Payment> getFiltered(String productArticle, Integer contragentId,
                                            Double sumFrom, Double sumTo, Integer status,
                                            LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
-                                           LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
+                                           LocalDateTime registratioinDateFrom, LocalDateTime registrationDateTo,
                                            LocalDateTime authorizationDateFrom, LocalDateTime authorizationDateTo) {
         // Пока что пусть возвращает все, не обращая внимание на значения фильтров
         return getAll();

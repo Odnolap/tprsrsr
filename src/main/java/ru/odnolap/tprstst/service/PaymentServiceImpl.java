@@ -32,7 +32,9 @@ public class PaymentServiceImpl implements PaymentService {
             BigDecimal bd = new BigDecimal(ThreadLocalRandom.current().nextDouble(100d, 100000d));
             payment.setSum(bd.setScale(2, RoundingMode.HALF_UP).doubleValue());
         }
-        payment.setRegistrationTime(LocalDateTime.now());
+        if (payment.getRegistrationTime() == null) {
+            payment.setRegistrationTime(LocalDateTime.now());
+        }
         return repository.save(payment);
     }
 
@@ -67,10 +69,10 @@ public class PaymentServiceImpl implements PaymentService {
     public Collection<Payment> getFiltered(String productArticle, Integer contragentId,
                                            Double sumFrom, Double sumTo, Integer status,
                                            LocalDateTime contragentDateFrom, LocalDateTime contragentDateTo,
-                                           LocalDateTime registratioinDateFrom, LocalDateTime RegistrationDateTo,
+                                           LocalDateTime registratioinDateFrom, LocalDateTime registrationDateTo,
                                            LocalDateTime authorizationDateFrom, LocalDateTime authorizationDateTo) {
         return repository.getFiltered(productArticle, contragentId, sumFrom, sumTo, status,
-                contragentDateFrom, contragentDateTo, registratioinDateFrom, RegistrationDateTo,
+                contragentDateFrom, contragentDateTo, registratioinDateFrom, registrationDateTo,
                 authorizationDateFrom, authorizationDateTo);
     }
 }
